@@ -1,4 +1,4 @@
-import { ValidationSpy } from '../mocks'
+import { ValidationSpy, CreateSensorSpy } from '../mocks'
 import { SensorController } from '@/presentation/controllers'
 
 const throwError = (): never => {
@@ -7,14 +7,17 @@ const throwError = (): never => {
 
 type SutTypes = {
     validationSpy: ValidationSpy
+    createSensorSpy: CreateSensorSpy
     sut: SensorController
 }
 
 const mockSut = (): SutTypes => {
     const validationSpy = new ValidationSpy()
-    const sut = new SensorController(validationSpy)
+    const createSensorSpy = new CreateSensorSpy()
+    const sut = new SensorController(validationSpy, createSensorSpy)
     return {
         validationSpy,
+        createSensorSpy,
         sut
     }
 }
@@ -40,8 +43,9 @@ describe('SensorController', () => {
     })
 
     test('Should return 400 if validation fails', async () => {
-        const { sut } = mockSut()
+        const { sut, validationSpy } = mockSut()
         const request = mockRequest()
+        validationSpy.error = new Error()
         const httpResponse = await sut.handle(request)
         expect(httpResponse.statusCode).toBe(400)
     })
@@ -52,5 +56,12 @@ describe('SensorController', () => {
         jest.spyOn(validationSpy, 'validate').mockImplementationOnce(throwError)
         const httpResponse = await sut.handle(request)
         expect(httpResponse.statusCode).toBe(400)
+    })
+
+    test('Should call CreateSensor with correct values', async () => {
+        const { sut, createSensorSpy } = mockSut()
+        const request = mockRequest()
+        await sut.handle(request)
+        expect(createSensorSpy.params).toEqual(request)
     })
 })
