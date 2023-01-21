@@ -33,4 +33,11 @@ describe('SensorController', () => {
         await sut.handle(request)
         expect(validationSpy.input).toEqual(request)
     })
+
+    test('Should return 400 if validation fails', async () => {
+        const { sut } = mockSut()
+        const request = mockRequest()
+        const httpResponse = await sut.handle(request)
+        expect(httpResponse.statusCode).toBe(400)
+    })
 })
