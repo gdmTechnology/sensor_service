@@ -1,1 +1,1 @@
-export * from './sensor.controller'
+export * from './create.sensor.controller'

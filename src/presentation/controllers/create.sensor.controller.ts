@@ -1,9 +1,11 @@
+import { CreateSensor } from '@/domain/usecases'
 import { Controller, Validation } from '@/presentation/protocols'
 import { badRequest } from '../helpers'
 
 export class SensorController implements Controller {
     constructor(
-        private readonly validation: Validation
+        private readonly validation: Validation,
+        private readonly createSensor: CreateSensor
     ) { }
 
     async handle(data: SensorController.Request): Promise<any> {
@@ -18,14 +20,11 @@ export class SensorController implements Controller {
 
 export namespace SensorController {
     export interface Request {
-        sensorIdentification: string
         sensorTenantId: string
         sensorName: string
         sensorEquipment: string
         sensorMeasureType: string
         sensorCurrentValue: string
         sensorTimeStamp: string
-        createdAt: Date
-        updatedAt: Date
     }
 }
