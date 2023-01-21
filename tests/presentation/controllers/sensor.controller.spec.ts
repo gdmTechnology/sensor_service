@@ -1,0 +1,36 @@
+import { ValidationSpy } from '../mocks'
+import { SensorController } from '@/presentation/controllers'
+
+type SutTypes = {
+    validationSpy: ValidationSpy
+    sut: SensorController
+}
+const mockSut = (): SutTypes => {
+    const validationSpy = new ValidationSpy()
+    const sut = new SensorController(validationSpy)
+    return {
+        validationSpy,
+        sut
+    }
+}
+
+const mockRequest = (): any => ({
+    sensorIdentification: 'sensorIdentification',
+    sensorTenantId: 'sensorTenantId',
+    sensorName: 'sensorName',
+    sensorEquipment: 'sensorEquipment',
+    sensorMeasureType: 'sensorMeasureType',
+    sensorCurrentValue: 'sensorMeasureType',
+    sensorTimeStamp: 'sensorMeasureType',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+})
+
+describe('SensorController', () => {
+    test('Should call Validation with correct values', async () => {
+        const { sut, validationSpy } = mockSut()
+        const request = mockRequest()
+        await sut.handle(request)
+        expect(validationSpy.input).toEqual(request)
+    })
+})
