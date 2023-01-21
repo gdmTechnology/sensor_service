@@ -10,8 +10,9 @@ export class SensorController implements Controller {
 
     async handle(data: SensorController.Request): Promise<any> {
         try {
-            const isValidate = this.validation.validate(data)
-            if (!isValidate) return badRequest(isValidate)
+            const error = this.validation.validate(data)
+            if (error) return badRequest(error)
+            await this.createSensor.handle(data)
         } catch (error) {
             return badRequest(error)
         }
