@@ -7,8 +7,12 @@ export class SensorController implements Controller {
     ) { }
 
     async handle(data: SensorController.Request): Promise<any> {
-        const isValidate = this.validation.validate(data)
-        if (!isValidate) return badRequest(isValidate)
+        try {
+            const isValidate = this.validation.validate(data)
+            if (!isValidate) return badRequest(isValidate)
+        } catch (error) {
+            return badRequest(error)
+        }
     }
 }
 
