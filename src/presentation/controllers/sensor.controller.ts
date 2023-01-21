@@ -1,4 +1,5 @@
 import { Controller, Validation } from '@/presentation/protocols'
+import { badRequest } from '../helpers'
 
 export class SensorController implements Controller {
     constructor(
@@ -6,7 +7,8 @@ export class SensorController implements Controller {
     ) { }
 
     async handle(data: SensorController.Request): Promise<any> {
-        this.validation.validate(data)
+        const isValidate = this.validation.validate(data)
+        if (!isValidate) return badRequest(isValidate)
     }
 }
 
