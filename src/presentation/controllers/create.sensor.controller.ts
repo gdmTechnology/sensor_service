@@ -1,6 +1,6 @@
 import { CreateSensor } from '@/domain/usecases'
 import { Controller, Validation } from '@/presentation/protocols'
-import { badRequest } from '../helpers'
+import { badRequest, ok } from '../helpers'
 
 export class SensorController implements Controller {
     constructor(
@@ -14,6 +14,7 @@ export class SensorController implements Controller {
             if (error) return badRequest(error)
             const sensor = await this.createSensor.handle(data)
             if (sensor.isError()) return badRequest(sensor.value.details)
+            return ok(sensor.value)
         } catch (error) {
             return badRequest(error)
         }
