@@ -1,13 +1,19 @@
 import { CreateSensor } from '@/domain/usecases'
-import { LoadSensorByNameRepository } from '@/data/protocols'
+import { SaveSensorRepository, CreateUuid } from '@/data/protocols'
 import { ApplicationError, Either } from '@/domain/protocols'
+import { Constants } from '@/helper'
 
 export class DbCreateSensor implements CreateSensor {
     constructor(
-        private readonly loadAccountByIdRepository: LoadSensorByNameRepository
+        private readonly createUuid: CreateUuid
+        // private readonly saveSensorRepository: SaveSensorRepository
     ) { }
 
     async handle(data: CreateSensor.Params): Promise<any> {
-        await this.loadAccountByIdRepository.load({ accountId: data.accountId, sensorName: data.sensorName })
+        const sensorIdentification = this.createUuid.create()
+        // const sensor = await this.saveSensorRepository.save({
+        //     accountId: data.accountId,
+        //     sensorName: data.sensorName
+        // })
     }
 }

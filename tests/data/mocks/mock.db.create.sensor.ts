@@ -1,22 +1,9 @@
-import { LoadSensorByNameRepository } from '@/data/protocols'
+import { CreateUuid, SaveSensorRepository } from '@/data/protocols'
 
-export class LoadSensorByNameRepositorySpy implements LoadSensorByNameRepository {
-    params: any
-    result: any = {
-        accountId: 'accountId',
-        sensorIdentification: 'sensorIdentification',
-        sensorTenantId: 'sensorTenantId',
-        sensorName: 'sensorName',
-        sensorEquipment: 'sensorEquipment',
-        sensorMeasureType: 'sensorMeasureType',
-        sensorCurrentValue: 'sensorCurrentValue',
-        sensorTimeStamp: 'sensorTimeStamp',
-        createdAt: 'createdAt',
-        updateddAt: 'sensorTimeStamp'
-    }
+export class CreateUuidSpy implements CreateUuid {
+    id = 'any_id'
 
-    async load(params: any): Promise<LoadSensorByNameRepository.Result> {
-        this.params = params
-        return this.result
+    create(): string {
+        return this.id
     }
 }

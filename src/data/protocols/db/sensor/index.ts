@@ -1,1 +1,1 @@
-export * from './load.sensor.by.name'
+export * from './save.sensor.by.name'
