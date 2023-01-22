@@ -5,6 +5,6 @@ export interface SaveSensorRepository {
 }
 
 export namespace SaveSensorRepository {
-    export type Params = CreateSensor & { sensorIdentification: string }
-    export type Result = CreateSensor.Result | null
+    export type Params = CreateSensor.Params & { sensorIdentification: string }
+    export type Result = CreateSensor.Result
 }
