@@ -1,6 +1,6 @@
 import { ValidationSpy, CreateSensorSpy } from '../mocks'
 import { SensorController } from '@/presentation/controllers'
-
+import { ApplicationError, error } from '@/domain/protocols'
 const throwError = (): never => {
     throw new Error()
 }
@@ -63,5 +63,17 @@ describe('SensorController', () => {
         const request = mockRequest()
         await sut.handle(request)
         expect(createSensorSpy.params).toEqual(request)
+    })
+
+    test('Should return 400 if CreateSensor fails', async () => {
+        const { sut, createSensorSpy } = mockSut()
+        const request = mockRequest()
+        const appError: ApplicationError = new ApplicationError(
+            '',
+            ''
+        )
+        createSensorSpy.result = error(appError)
+        const result = await sut.handle(request)
+        expect(result.statusCode).toBe(400)
     })
 })
