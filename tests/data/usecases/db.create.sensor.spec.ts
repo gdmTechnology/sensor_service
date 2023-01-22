@@ -1,9 +1,9 @@
 import { DbCreateSensor } from '@/data/usecases'
 import { CreateSensor } from '@/domain/usecases'
-import { LoadSensorByNameRepositorySpy } from '@/tests/data/mocks'
+import { CreateUuidSpy } from '@/tests/data/mocks'
 
 type SutTypes = {
-    loadSensorByNameRepositorySpy: LoadSensorByNameRepositorySpy
+    createUuidSpy: CreateUuidSpy
     sut: DbCreateSensor
 }
 
@@ -12,9 +12,9 @@ const throwError = (): never => {
 }
 
 const makeSut = (): SutTypes => {
-    const loadSensorByNameRepositorySpy = new LoadSensorByNameRepositorySpy()
-    const sut = new DbCreateSensor(loadSensorByNameRepositorySpy)
-    return { sut, loadSensorByNameRepositorySpy }
+    const createUuidSpy = new CreateUuidSpy()
+    const sut = new DbCreateSensor(createUuidSpy)
+    return { sut, createUuidSpy }
 }
 
 const mockRequest = (): CreateSensor.Params => ({
@@ -28,10 +28,17 @@ const mockRequest = (): CreateSensor.Params => ({
 })
 
 describe('DbCreateSensor', () => {
-    test('Should call LoadAccountByTokenRepository with correct ciphertext', async () => {
-        const { sut, loadSensorByNameRepositorySpy } = makeSut()
+    test('Should throw if CreateUuid throws', async () => {
+        const { sut, createUuidSpy } = makeSut()
         const request = mockRequest()
-        await sut.handle(request)
-        expect(loadSensorByNameRepositorySpy.params).toEqual({ accountId: request.accountId, sensorName: request.sensorName })
+        jest.spyOn(createUuidSpy, 'create').mockImplementationOnce(throwError)
+        const promise = sut.handle(request)
+        await expect(promise).rejects.toThrow()
     })
+    // test('Should call LoadAccountByTokenRepository with correct values', async () => {
+    //     const { sut, loadSensorByNameRepositorySpy } = makeSut()
+    //     const request = mockRequest()
+    //     await sut.handle(request)
+    //     expect(loadSensorByNameRepositorySpy.params).toEqual({ accountId: request.accountId, sensorName: request.sensorName })
+    // })
 })
