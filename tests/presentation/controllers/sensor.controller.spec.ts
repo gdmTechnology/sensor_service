@@ -55,7 +55,7 @@ describe('SensorController', () => {
         const request = mockRequest()
         jest.spyOn(validationSpy, 'validate').mockImplementationOnce(throwError)
         const httpResponse = await sut.handle(request)
-        expect(httpResponse.statusCode).toBe(400)
+        expect(httpResponse.statusCode).toBe(500)
     })
 
     test('Should call CreateSensor with correct values', async () => {
@@ -73,14 +73,22 @@ describe('SensorController', () => {
             ''
         )
         createSensorSpy.result = error(appError)
-        const result = await sut.handle(request)
-        expect(result.statusCode).toBe(400)
+        const httpResponse = await sut.handle(request)
+        expect(httpResponse.statusCode).toBe(400)
     })
 
     test('Should return 200 if CreateSensor succeds', async () => {
         const { sut } = mockSut()
         const request = mockRequest()
-        const result = await sut.handle(request)
-        expect(result.statusCode).toBe(200)
+        const httpResponse = await sut.handle(request)
+        expect(httpResponse.statusCode).toBe(200)
+    })
+
+    test('Should return 500 if CreateSensor throws', async () => {
+        const { sut, createSensorSpy } = mockSut()
+        const request = mockRequest()
+        jest.spyOn(createSensorSpy, 'handle').mockImplementationOnce(throwError)
+        const httpResponse = await sut.handle(request)
+        expect(httpResponse.statusCode).toBe(500)
     })
 })
