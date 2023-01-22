@@ -1,9 +1,10 @@
 import { DbCreateSensor } from '@/data/usecases'
 import { CreateSensor } from '@/domain/usecases'
-import { CreateUuidSpy } from '@/tests/data/mocks'
+import { CreateUuidSpy, SaveSensorRepositorySpy } from '@/tests/data/mocks'
 
 type SutTypes = {
     createUuidSpy: CreateUuidSpy
+    saveSensorRepositorySpy: SaveSensorRepositorySpy
     sut: DbCreateSensor
 }
 
@@ -13,8 +14,9 @@ const throwError = (): never => {
 
 const makeSut = (): SutTypes => {
     const createUuidSpy = new CreateUuidSpy()
-    const sut = new DbCreateSensor(createUuidSpy)
-    return { sut, createUuidSpy }
+    const saveSensorRepositorySpy = new SaveSensorRepositorySpy()
+    const sut = new DbCreateSensor(createUuidSpy, saveSensorRepositorySpy)
+    return { sut, createUuidSpy, saveSensorRepositorySpy }
 }
 
 const mockRequest = (): CreateSensor.Params => ({
@@ -35,10 +37,11 @@ describe('DbCreateSensor', () => {
         const promise = sut.handle(request)
         await expect(promise).rejects.toThrow()
     })
-    // test('Should call LoadAccountByTokenRepository with correct values', async () => {
-    //     const { sut, loadSensorByNameRepositorySpy } = makeSut()
-    //     const request = mockRequest()
-    //     await sut.handle(request)
-    //     expect(loadSensorByNameRepositorySpy.params).toEqual({ accountId: request.accountId, sensorName: request.sensorName })
-    // })
+
+    test('Should call SaveSensorRepository with correct values', async () => {
+        const { sut, saveSensorRepositorySpy } = makeSut()
+        const request = mockRequest()
+        await sut.handle(request)
+        expect(saveSensorRepositorySpy.params).toEqual({ ...request, sensorIdentification: 'any_id' })
+    })
 })
