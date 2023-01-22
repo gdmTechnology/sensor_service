@@ -51,4 +51,12 @@ describe('DbCreateSensor', () => {
         const result = await sut.handle(request)
         expect(result.isError()).toBeFalsy()
     })
+
+    test('Should throw if SaveSensorRepository throws', async () => {
+        const { sut, saveSensorRepositorySpy } = makeSut()
+        jest.spyOn(saveSensorRepositorySpy, 'save').mockImplementationOnce(throwError)
+        const request = mockRequest()
+        const promise = sut.handle(request)
+        await expect(promise).rejects.toThrow()
+    })
 })
