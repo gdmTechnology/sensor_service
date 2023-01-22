@@ -1,7 +1,6 @@
 import { CreateSensor } from '@/domain/usecases'
 import { SaveSensorRepository, CreateUuid } from '@/data/protocols'
-import { ApplicationError, Either } from '@/domain/protocols'
-import { Constants } from '@/helper'
+import { ApplicationError, Either, success } from '@/domain/protocols'
 
 export class DbCreateSensor implements CreateSensor {
     constructor(
@@ -9,8 +8,9 @@ export class DbCreateSensor implements CreateSensor {
         private readonly saveSensorRepository: SaveSensorRepository
     ) { }
 
-    async handle(data: CreateSensor.Params): Promise<any> {
+    async handle(data: CreateSensor.Params): Promise<Either<ApplicationError, CreateSensor.Result>> {
         const sensorIdentification = this.createUuid.create()
-        await this.saveSensorRepository.save({ ...data, sensorIdentification })
+        const sensor = await this.saveSensorRepository.save({ ...data, sensorIdentification })
+        return success(sensor)
     }
 }
