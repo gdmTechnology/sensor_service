@@ -59,4 +59,12 @@ describe('DbCreateSensor', () => {
         const promise = sut.handle(request)
         await expect(promise).rejects.toThrow()
     })
+
+    test('Should return null if SaveSensorRepository fails', async () => {
+        const { sut, saveSensorRepositorySpy } = makeSut()
+        saveSensorRepositorySpy.result = null
+        const request = mockRequest()
+        const result = await sut.handle(request)
+        expect(result.isError()).toBeTruthy()
+    })
 })
