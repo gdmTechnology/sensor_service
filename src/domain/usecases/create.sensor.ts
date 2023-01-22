@@ -25,6 +25,6 @@ export namespace CreateSensor {
         sensorCurrentValue: string
         sensorTimeStamp: string
         createdAt: Date
-        updateddAt: Date
+        updatedAt: Date
     }
 }
