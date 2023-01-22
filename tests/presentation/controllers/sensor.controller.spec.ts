@@ -76,4 +76,11 @@ describe('SensorController', () => {
         const result = await sut.handle(request)
         expect(result.statusCode).toBe(400)
     })
+
+    test('Should return 200 if CreateSensor succeds', async () => {
+        const { sut } = mockSut()
+        const request = mockRequest()
+        const result = await sut.handle(request)
+        expect(result.statusCode).toBe(200)
+    })
 })
