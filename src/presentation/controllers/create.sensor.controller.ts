@@ -1,6 +1,6 @@
 import { CreateSensor } from '@/domain/usecases'
 import { Controller, Validation } from '@/presentation/protocols'
-import { badRequest, ok } from '../helpers'
+import { badRequest, ok, serverError } from '../helpers'
 
 export class SensorController implements Controller {
     constructor(
@@ -16,7 +16,7 @@ export class SensorController implements Controller {
             if (sensor.isError()) return badRequest(sensor.value.details)
             return ok(sensor.value)
         } catch (error) {
-            return badRequest(error)
+            return serverError(error)
         }
     }
 }
