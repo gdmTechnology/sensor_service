@@ -6,6 +6,7 @@ export interface CreateSensor {
 
 export namespace CreateSensor {
     export type Params = {
+        accountId: string
         sensorTenantId: string
         sensorName: string
         sensorEquipment: string
@@ -15,6 +16,7 @@ export namespace CreateSensor {
     }
 
     export type Result = {
+        accountId: string
         sensorIdentification: string
         sensorTenantId: string
         sensorName: string
