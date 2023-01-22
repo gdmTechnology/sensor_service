@@ -12,7 +12,8 @@ export class SensorController implements Controller {
         try {
             const error = this.validation.validate(data)
             if (error) return badRequest(error)
-            await this.createSensor.handle(data)
+            const sensor = await this.createSensor.handle(data)
+            if (sensor.isError()) return badRequest(sensor.value.details)
         } catch (error) {
             return badRequest(error)
         }

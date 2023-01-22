@@ -3,7 +3,7 @@ import { CreateSensor } from '@/domain/usecases'
 
 export class CreateSensorSpy implements CreateSensor {
     params = null
-    result = {
+    result = success({
         sensorIdentification: 'sensorIdentification',
         sensorTenantId: 'sensorTenantId',
         sensorName: 'sensorName',
@@ -13,10 +13,10 @@ export class CreateSensorSpy implements CreateSensor {
         sensorTimeStamp: 'sensorTimeStamp',
         createdAt: 'createdAt',
         updateddAt: 'updateddAt'
-    }
+    })
 
-    async handle(data: CreateSensor.Params): Promise<Either<ApplicationError, any>> {
+    async handle(data: CreateSensor.Params): Promise<any> {
         this.params = data
-        return success(this.result)
+        return this.result
     }
 }
