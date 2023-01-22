@@ -44,4 +44,11 @@ describe('DbCreateSensor', () => {
         await sut.handle(request)
         expect(saveSensorRepositorySpy.params).toEqual({ ...request, sensorIdentification: 'any_id' })
     })
+
+    test('Should return sensor if SaveSensorRepository succeds', async () => {
+        const { sut } = makeSut()
+        const request = mockRequest()
+        const result = await sut.handle(request)
+        expect(result.isError()).toBeFalsy()
+    })
 })
