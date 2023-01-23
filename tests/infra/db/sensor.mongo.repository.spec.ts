@@ -13,7 +13,7 @@ const createSensorParams = (): SensorMongoRepository.Params => ({
     sensorName: 'sensorName',
     sensorEquipment: 'sensorEquipment',
     sensorMeasureType: 'sensorMeasureType',
-    sensorCurrentValue: 'sensorMeasureType',
+    sensorCurrentValue: 0,
     sensorTimeStamp: 'sensorMeasureType'
 })
 

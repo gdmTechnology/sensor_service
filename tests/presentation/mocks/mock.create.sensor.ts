@@ -1,4 +1,4 @@
-import { ApplicationError, Either, success } from '@/domain/protocols'
+import { success } from '@/domain/protocols'
 import { CreateSensor } from '@/domain/usecases'
 
 export class CreateSensorSpy implements CreateSensor {
@@ -9,7 +9,7 @@ export class CreateSensorSpy implements CreateSensor {
         sensorName: 'sensorName',
         sensorEquipment: 'sensorEquipment',
         sensorMeasureType: 'sensorMeasureType',
-        sensorCurrentValue: 'sensorCurrentValue',
+        sensorCurrentValue: 0,
         sensorTimeStamp: 'sensorTimeStamp',
         createdAt: 'createdAt',
         updateddAt: 'updateddAt'

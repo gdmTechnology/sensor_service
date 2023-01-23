@@ -25,7 +25,7 @@ const mockRequest = (): CreateSensor.Params => ({
     sensorName: 'sensorName',
     sensorEquipment: 'sensorEquipment',
     sensorMeasureType: 'sensorMeasureType',
-    sensorCurrentValue: 'sensorCurrentValue',
+    sensorCurrentValue: 0,
     sensorTimeStamp: 'sensorTimeStamp'
 })
 

@@ -38,16 +38,18 @@ const SensorSchema = new Schema({
         required: true
     },
     sensorCurrentValue: {
-        type: String,
+        type: Number,
         index: true,
         unique: true,
-        required: true
+        required: true,
+        default: 0
     },
     sensorTimeStamp: {
         type: String,
         index: true,
         unique: true,
-        required: true
+        required: true,
+        default: new Date()
     }
 }, { timestamps: true })
 

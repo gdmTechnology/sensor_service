@@ -11,7 +11,7 @@ export namespace CreateSensor {
         sensorName: string
         sensorEquipment: string
         sensorMeasureType: string
-        sensorCurrentValue: string
+        sensorCurrentValue: number
         sensorTimeStamp: string
     }
 
@@ -22,7 +22,7 @@ export namespace CreateSensor {
         sensorName: string
         sensorEquipment: string
         sensorMeasureType: string
-        sensorCurrentValue: string
+        sensorCurrentValue: number
         sensorTimeStamp: string
         createdAt: Date
         updatedAt: Date

@@ -17,7 +17,7 @@ export class SaveSensorRepositorySpy implements SaveSensorRepository {
         sensorName: 'sensorName',
         sensorEquipment: 'sensorEquipment',
         sensorMeasureType: 'sensorMeasureType',
-        sensorCurrentValue: 'sensorCurrentValue',
+        sensorCurrentValue: 0,
         sensorTimeStamp: 'sensorTimeStamp',
         createdAt: 'createdAt',
         updateddAt: 'updateddAt'

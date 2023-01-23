@@ -1,5 +1,5 @@
 import { ValidationSpy, CreateSensorSpy } from '../mocks'
-import { SensorController } from '@/presentation/controllers'
+import { CreateSensorController } from '@/presentation/controllers'
 import { ApplicationError, error } from '@/domain/protocols'
 const throwError = (): never => {
     throw new Error()
@@ -8,13 +8,13 @@ const throwError = (): never => {
 type SutTypes = {
     validationSpy: ValidationSpy
     createSensorSpy: CreateSensorSpy
-    sut: SensorController
+    sut: CreateSensorController
 }
 
 const mockSut = (): SutTypes => {
     const validationSpy = new ValidationSpy()
     const createSensorSpy = new CreateSensorSpy()
-    const sut = new SensorController(validationSpy, createSensorSpy)
+    const sut = new CreateSensorController(validationSpy, createSensorSpy)
     return {
         validationSpy,
         createSensorSpy,
@@ -28,7 +28,7 @@ const mockRequest = (): any => ({
     sensorName: 'sensorName',
     sensorEquipment: 'sensorEquipment',
     sensorMeasureType: 'sensorMeasureType',
-    sensorCurrentValue: 'sensorMeasureType',
+    sensorCurrentValue: 0,
     sensorTimeStamp: 'sensorMeasureType',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'

@@ -2,13 +2,13 @@ import { CreateSensor } from '@/domain/usecases'
 import { Controller, Validation } from '@/presentation/protocols'
 import { badRequest, ok, serverError } from '../helpers'
 
-export class SensorController implements Controller {
+export class CreateSensorController implements Controller {
     constructor(
         private readonly validation: Validation,
         private readonly createSensor: CreateSensor
     ) { }
 
-    async handle(data: SensorController.Request): Promise<any> {
+    async handle(data: CreateSensorController.Request): Promise<any> {
         try {
             const error = this.validation.validate(data)
             if (error) return badRequest(error)
@@ -21,14 +21,14 @@ export class SensorController implements Controller {
     }
 }
 
-export namespace SensorController {
+export namespace CreateSensorController {
     export interface Request {
         accountId: string
         sensorTenantId: string
         sensorName: string
         sensorEquipment: string
         sensorMeasureType: string
-        sensorCurrentValue: string
+        sensorCurrentValue: number
         sensorTimeStamp: string
     }
 }
