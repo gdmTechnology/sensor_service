@@ -22,10 +22,17 @@ describe('SensorMongoRepository', () => {
     afterEach(async () => await MongoTestDbHelper.clearDatabase())
     afterAll(async () => await MongoTestDbHelper.disconnect())
 
-    test('Should return an account on success', async () => {
+    test('Should return an sensor on success', async () => {
         const sut = makeSut()
         const params = createSensorParams()
         const sensor = await sut.save(params)
         expect(sensor).toBeDefined()
+    })
+
+    test('Should throw if SensorMongoRepository throws', async () => {
+        const sut = makeSut()
+        const params = createSensorParams()
+        const promise = sut.save({ ...params, accountId: '' })
+        await expect(promise).rejects.toThrow()
     })
 })
