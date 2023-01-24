@@ -6,5 +6,9 @@ export const Constants = {
         error: 'DatabaseUniqueConstraintError',
         message: 'Object already exists.',
         code: 11000
+    },
+    NotFoundSensor: {
+        error: 'NotFoundSensorError',
+        message: 'Not found sensor identification.'
     }
 }

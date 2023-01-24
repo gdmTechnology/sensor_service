@@ -6,9 +6,8 @@ export interface UpdateSensor {
 
 export namespace UpdateSensor {
     export type Params = {
-        accountId: string
-        sensorTenantId: string
         sensorIdentification: string
+        sensorTenantId?: string
         sensorName?: string
         sensorEquipment?: string
         sensorMeasureType?: string
