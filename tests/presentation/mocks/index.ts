@@ -1,3 +1,5 @@
 export * from './mock.validation'
 export * from './mock.middleware.authentication'
 export * from './mock.create.sensor'
+export * from './mock.create.sensor'
+export * from './mock.update.sensor'
