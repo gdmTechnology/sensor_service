@@ -34,7 +34,7 @@ const mockRequest = (): any => ({
     updatedAt: 'updatedAt'
 })
 
-describe('SensorController', () => {
+describe('UpdateSensorController', () => {
     test('Should call Validation with correct values', async () => {
         const { sut, validationSpy } = mockSut()
         const request = mockRequest()
