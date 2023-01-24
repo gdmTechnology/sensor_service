@@ -48,7 +48,6 @@ describe('SensorMongoRepository', () => {
             const sensor = await sut.save(params)
             const { sensorIdentification } = sensor
             const sensorUpdated = await sut.update({ sensorIdentification, sensorName: 'sensorNameUpdated' })
-            console.log('sensorUpdated', sensorUpdated)
             expect(sensorUpdated.sensorName).toBe('sensorNameUpdated')
         })
 
