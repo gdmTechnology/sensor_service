@@ -1,7 +1,7 @@
-import { SaveSensorRepository, UpdateSensorRepository } from '@/data/protocols'
+import { SaveSensorRepository, UpdateSensorRepository, GetSensorsListRepository } from '@/data/protocols'
 import { SensorModel } from './models'
 
-export class SensorMongoRepository implements SaveSensorRepository, UpdateSensorRepository {
+export class SensorMongoRepository implements SaveSensorRepository, UpdateSensorRepository, GetSensorsListRepository {
     async save(data: SaveSensorRepository.Params): Promise<SaveSensorRepository.Result> {
         const result = await SensorModel.create(data)
         if (result.accountId) return result
@@ -20,6 +20,10 @@ export class SensorMongoRepository implements SaveSensorRepository, UpdateSensor
         const option = { new: true }
         const result = SensorModel.findOneAndUpdate(filter, update, option).lean()
         return result
+    }
+
+    async list(tenantId: string): Promise<GetSensorsListRepository.Result[]> {
+        return await SensorModel.find({ tenantId })
     }
 }
 
