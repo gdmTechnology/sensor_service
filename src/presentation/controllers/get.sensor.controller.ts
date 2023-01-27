@@ -8,7 +8,7 @@ export class GetSensorController implements Controller {
         private readonly getSensor: GetSensor
     ) { }
 
-    async handle(sensorIdentification: string): Promise<any> {
+    async handle({ sensorIdentification }: { sensorIdentification: string }): Promise<any> {
         try {
             const error = this.validation.validate({ sensorIdentification })
             if (error) return badRequest(error)
