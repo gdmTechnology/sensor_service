@@ -90,4 +90,28 @@ describe('SensorMongoRepository', () => {
             await expect(promise).rejects.toThrow()
         })
     })
+
+    describe('get()', () => {
+        test('Should return a a sensor on success', async () => {
+            const sut = makeSut()
+            const params = createSensorParams()
+            await sut.save(params)
+            const sensorsList = await sut.get(params.sensorIdentification)
+            expect(sensorsList).toHaveProperty('sensorIdentification')
+        })
+
+        test('Should return null if get() fails', async () => {
+            const sut = makeSut()
+            const result = await sut.get('any_sensorIdentification')
+            expect(result).toBeNull()
+        })
+
+        test('Should throw if get() throws', async () => {
+            const sut = makeSut()
+            jest.spyOn(sut, 'get').mockReturnValueOnce(new Promise((resolve, reject) => reject(throwError)))
+            const params = createSensorParams()
+            const promise = sut.get(params.sensorIdentification)
+            await expect(promise).rejects.toThrow()
+        })
+    })
 })
