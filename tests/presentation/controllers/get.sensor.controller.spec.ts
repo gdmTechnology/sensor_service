@@ -23,7 +23,7 @@ const mockSut = (): SutTypes => {
     }
 }
 
-const mockRequest = (): any => 'sensorIdentification'
+const mockRequest = (): any => ({ sensorIdentification: 'sensorIdentification' })
 
 describe('GetSensorController', () => {
     test('Should call Validation with correct values', async () => {
@@ -53,7 +53,7 @@ describe('GetSensorController', () => {
         const { sut, getSensorSpy } = mockSut()
         const request = mockRequest()
         await sut.handle(request)
-        expect(getSensorSpy.params).toEqual(request)
+        expect(getSensorSpy.params).toEqual(request.sensorIdentification)
     })
 
     test('Should return 400 if GetSensor fails', async () => {
