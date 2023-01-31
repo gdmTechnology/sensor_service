@@ -11,7 +11,7 @@ export class KafkaConsumerData implements KafkaConsumer {
     ) { }
 
     async kafkaConsumer(): Promise<void> {
-        const consumer = this.kafkaServer.consumer({ groupId: env.KAFKA_GROUP_ID })
+        const consumer = this.kafkaServer.consumer({ groupId: env.kafkaGroupId })
         await consumer.connect()
         await consumer.subscribe({ topic: Topics.MEASURE, fromBeginning: true })
         await consumer.run({
