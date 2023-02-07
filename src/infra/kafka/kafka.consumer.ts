@@ -1,27 +1,29 @@
-import { KafkaConsumer } from '@/data/protocols'
+import env from '@/main/config/env'
+import { Consumer } from '@/data/protocols'
 import { Kafka } from 'kafkajs'
 import { Topics } from '@/main/config/kafka'
-import env from '@/main/config/env'
-import { Controller } from '@/presentation/protocols'
+import { makeUpdateSensorController } from '@/main/factories'
 
-export class KafkaConsumerData implements KafkaConsumer {
+export let consumer = null
+
+export class KafkaConsumer implements Consumer {
     constructor(
-        private readonly kafkaServer: Kafka,
-        private readonly updateController: Controller
+        private readonly kafkaServer: Kafka
     ) { }
 
-    async kafkaConsumer(): Promise<void> {
-        const consumer = this.kafkaServer.consumer({ groupId: env.kafkaGroupId })
+    async consumer(): Promise<void> {
+        if (consumer) return consumer
+        consumer = this.kafkaServer.consumer({ groupId: env.kafkaGroupId })
         await consumer.connect()
         await consumer.subscribe({ topic: Topics.MEASURE, fromBeginning: true })
         await consumer.run({
             eachMessage: async ({ topic, partition, message }) => {
-                // this.updateController.handle()
-                console.log({
-                    partition,
-                    offset: message.offset,
-                    value: message.value.toString()
-                })
+                try {
+                    const data = JSON.parse(message.value.toString())
+                    await makeUpdateSensorController().handle(data)
+                } catch (error) {
+                    console.error('Err:: ', error)
+                }
             }
         })
     }

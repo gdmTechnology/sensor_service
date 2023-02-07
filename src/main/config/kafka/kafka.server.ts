@@ -1,13 +1,12 @@
 import { Kafka } from 'kafkajs'
 import env from '@/main/config/env'
-import { KafkaConsumerData } from '@/infra/kafka'
-import { Controller } from '@/presentation/protocols'
+import { KafkaConsumer } from '@/infra/kafka'
 
-export const setupKafka = async (controller: Controller): Promise<void> => {
+export const setupKafka = async (): Promise<void> => {
     const kafkaServer = new Kafka({
         clientId: env.kafkaClientId,
         brokers: [`${env.kafkaBrokerHost}: ${env.kafkaBrokerPort}`]
     })
-    const kafka = new KafkaConsumerData(kafkaServer, controller)
-    await kafka.kafkaConsumer()
+    const kafkaConsumer = new KafkaConsumer(kafkaServer)
+    await kafkaConsumer.consumer()
 }

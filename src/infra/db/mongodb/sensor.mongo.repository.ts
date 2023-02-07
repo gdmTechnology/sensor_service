@@ -9,14 +9,15 @@ export class SensorMongoRepository implements SaveSensorRepository, UpdateSensor
     }
 
     async update(data: UpdateSensorRepository.Params): Promise<UpdateSensorRepository.Result> {
-        const { sensorIdentification, sensorName, sensorEquipment, sensorMeasureType, sensorCurrentValue, sensorTimeStamp } = data
+        const { sensorIdentification, sensorName, sensorEquipment, sensorMeasureType, sensorTimeStamp, sensorValue } = data
         const filter = { sensorIdentification }
-        const update: any = { sensorName, sensorEquipment, sensorMeasureType, sensorCurrentValue, sensorTimeStamp }
+        const update: any = { sensorName, sensorEquipment, sensorMeasureType, sensorTimeStamp }
         sensorName === undefined && delete update.sensorName
         sensorEquipment === undefined && delete update.sensorEquipment
         sensorMeasureType === undefined && delete update.sensorMeasureType
-        sensorCurrentValue === undefined && delete update.sensorCurrentValue
+        sensorValue === undefined && delete update.sensorValue
         sensorTimeStamp === undefined && delete update.sensorTimeStamp
+        if (sensorValue) update.sensorCurrentValue = sensorValue
         const option = { new: true }
         const result = SensorModel.findOneAndUpdate(filter, update, option).lean()
         return result

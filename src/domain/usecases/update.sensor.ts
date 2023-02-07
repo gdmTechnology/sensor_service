@@ -12,6 +12,7 @@ export namespace UpdateSensor {
         sensorEquipment?: string
         sensorMeasureType?: string
         sensorCurrentValue?: number
+        sensorValue?: number
         sensorTimeStamp?: string
     }
 

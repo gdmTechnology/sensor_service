@@ -1,3 +1,3 @@
-export interface KafkaConsumer {
-    kafkaConsumer: () => Promise<void>
+export interface Consumer {
+    consumer: () => Promise<void>
 }
