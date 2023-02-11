@@ -24,6 +24,7 @@ export class CreateSensorController implements Controller {
 export namespace CreateSensorController {
     export interface Request {
         accountId: string
+        deviceIdentification: string
         sensorTenantId: string
         sensorName: string
         sensorEquipment: string

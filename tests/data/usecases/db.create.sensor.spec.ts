@@ -21,6 +21,7 @@ const makeSut = (): SutTypes => {
 
 const mockRequest = (): CreateSensor.Params => ({
     accountId: 'accountId',
+    deviceIdentification: 'deviceIdentification',
     sensorTenantId: 'sensorTenantId',
     sensorName: 'sensorName',
     sensorEquipment: 'sensorEquipment',

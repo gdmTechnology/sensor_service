@@ -7,6 +7,12 @@ const SensorSchema = new Schema({
         unique: true,
         required: true
     },
+    deviceIdentification: {
+        type: String,
+        index: true,
+        unique: true,
+        required: true
+    },
     sensorIdentification: {
         type: String,
         index: true,

@@ -11,6 +11,7 @@ const makeSut = (): SensorMongoRepository => {
 
 const createSensorParams = (): SensorMongoRepository.Params => ({
     accountId: 'accountId',
+    deviceIdentification: 'deviceIdentification',
     sensorTenantId: 'sensorTenantId',
     sensorIdentification: 'sensorIdentification',
     sensorName: 'sensorName',
