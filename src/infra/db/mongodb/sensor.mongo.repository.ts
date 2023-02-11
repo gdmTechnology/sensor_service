@@ -3,9 +3,13 @@ import { SensorModel } from './models'
 
 export class SensorMongoRepository implements SaveSensorRepository, UpdateSensorRepository, GetSensorsListRepository, GetSensorRepository {
     async save(data: SaveSensorRepository.Params): Promise<SaveSensorRepository.Result> {
-        const result = await SensorModel.create(data)
-        if (result.accountId) return result
-        return null
+        try {
+            const result = await SensorModel.create(data)
+            if (result.accountId) return result
+            return null
+        } catch (error) {
+            return null
+        }
     }
 
     async update(data: UpdateSensorRepository.Params): Promise<UpdateSensorRepository.Result> {

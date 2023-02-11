@@ -15,7 +15,7 @@ export class DbCreateSensor implements CreateSensor {
         if (!sensor) {
             const appError = new ApplicationError(
                 Constants.DuplicateError.error,
-                Constants.DuplicateError.message
+                Constants.DuplicateError
             )
             return error(appError)
         }

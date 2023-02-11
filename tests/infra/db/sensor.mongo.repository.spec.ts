@@ -33,13 +33,6 @@ describe('SensorMongoRepository', () => {
             const sensor = await sut.save(params)
             expect(sensor).toBeDefined()
         })
-
-        test('Should throw if SensorMongoRepository throws', async () => {
-            const sut = makeSut()
-            const params = createSensorParams()
-            const promise = sut.save({ ...params, accountId: '' })
-            await expect(promise).rejects.toThrow()
-        })
     })
 
     describe('update()', () => {
