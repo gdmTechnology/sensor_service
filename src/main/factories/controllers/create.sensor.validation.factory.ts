@@ -1,4 +1,4 @@
-import { RequiredFieldValidation, ValidationComposite } from '@/validation/validators'
+import { CompareSensortypeValidation, RequiredFieldValidation, ValidationComposite } from '@/validation/validators'
 import { Validation } from '@/presentation/protocols'
 
 export const makeCreateSensorValidation = (): ValidationComposite => {
@@ -6,5 +6,6 @@ export const makeCreateSensorValidation = (): ValidationComposite => {
     for (const field of ['accountId', 'deviceIdentification', 'sensorTenantId', 'sensorName', 'sensorEquipment', 'sensorMeasureType']) {
         validations.push(new RequiredFieldValidation(field))
     }
+    validations.push(new CompareSensortypeValidation('sensorMeasureType'))
     return new ValidationComposite(validations)
 }
