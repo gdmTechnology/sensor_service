@@ -10,12 +10,13 @@ export class DbUpdateSensorMeasure implements UpdateSensorMeasure {
 
     async handle(data: UpdateSensorMeasure.Params): Promise<Either<ApplicationError, UpdateSensorMeasure.Result>> {
         const update = {
+            deviceIdentification: data.deviceIdentification,
             sensorIdentification: data.sensorIdentification,
             sensorMeasureType: data.sensorMeasureType,
-            sensorValue: data.sensorValue,
+            sensorCurrentValue: data.sensorValue,
             sensorTimeStamp: data.sensorTimeStamp
         }
-        const sensor = await this.updateSensorMeasureRepository.update(update)
+        const sensor = await this.updateSensorMeasureRepository.updateMeasure(update)
         if (!sensor) {
             const appError = new ApplicationError(
                 Constants.NotFoundSensor.error,

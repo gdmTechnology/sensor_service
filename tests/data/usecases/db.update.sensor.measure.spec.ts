@@ -18,6 +18,7 @@ const makeSut = (): SutTypes => {
 }
 
 const mockRequest = (): UpdateSensorMeasure.Params => ({
+    deviceIdentification: 'deviceIdentification',
     sensorIdentification: 'sensorIdentification',
     sensorMeasureType: 'sensorMeasureType',
     sensorValue: 0,
@@ -25,29 +26,31 @@ const mockRequest = (): UpdateSensorMeasure.Params => ({
 })
 
 describe('DbUpdateSensorMeasure', () => {
-    test('Should call UpdateSensorRepository with correct values', async () => {
+    test('Should call UpdateSensorMeasureRepository with correct values', async () => {
         const { sut, updateSensorMeasureRepositorySpy } = makeSut()
         const request = mockRequest()
         await sut.handle(request)
-        expect(updateSensorMeasureRepositorySpy.params).toEqual(request)
+        const params = { ...request, sensorCurrentValue: 0 }
+        delete params.sensorValue
+        expect(updateSensorMeasureRepositorySpy.params).toEqual(params)
     })
 
-    test('Should return sensor if UpdateSensorRepository succeds', async () => {
+    test('Should return sensor if UpdateSensorMeasureRepository succeds', async () => {
         const { sut } = makeSut()
         const request = mockRequest()
         const result = await sut.handle(request)
         expect(result.isError()).toBeFalsy()
     })
 
-    test('Should throw if UpdateSensorRepository throws', async () => {
+    test('Should throw if UpdateSensorMeasureRepository throws', async () => {
         const { sut, updateSensorMeasureRepositorySpy } = makeSut()
-        jest.spyOn(updateSensorMeasureRepositorySpy, 'update').mockImplementationOnce(throwError)
+        jest.spyOn(updateSensorMeasureRepositorySpy, 'updateMeasure').mockImplementationOnce(throwError)
         const request = mockRequest()
         const promise = sut.handle(request)
         await expect(promise).rejects.toThrow()
     })
 
-    test('Should return null if UpdateSensorRepository fails', async () => {
+    test('Should return null if UpdateSensorMeasureRepository fails', async () => {
         const { sut, updateSensorMeasureRepositorySpy } = makeSut()
         updateSensorMeasureRepositorySpy.result = null
         const request = mockRequest()
