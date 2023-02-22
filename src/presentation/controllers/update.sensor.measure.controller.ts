@@ -23,6 +23,7 @@ export class UpdateSensorMeasureController implements Controller {
 
 export namespace UpdateSensorMeasureController {
     export interface Request {
+        deviceIdentification: string
         sensorIdentification: string
         sensorMeasureType: string
         sensorValue: number

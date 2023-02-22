@@ -24,6 +24,7 @@ const mockSut = (): SutTypes => {
 }
 
 const mockRequest = (): any => ({
+    deviceIdentification: 'deviceIdentification',
     sensorIdentification: 'sensorIdentification',
     sensorMeasureType: 'sensorMeasureType',
     sensorCurrentValue: 0,
