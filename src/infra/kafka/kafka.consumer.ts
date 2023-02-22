@@ -2,7 +2,7 @@ import env from '@/main/config/env'
 import { Consumer } from '@/data/protocols'
 import { Kafka } from 'kafkajs'
 import { Topics } from '@/main/config/kafka'
-import { makeUpdateSensorController } from '@/main/factories'
+import { makeUpdateSensorMeasureController } from '@/main/factories'
 
 export let consumer = null
 
@@ -20,7 +20,7 @@ export class KafkaConsumer implements Consumer {
             eachMessage: async ({ topic, partition, message }) => {
                 try {
                     const data = JSON.parse(message.value.toString())
-                    await makeUpdateSensorController().handle(data)
+                    await makeUpdateSensorMeasureController().handle(data)
                 } catch (error) {
                     console.error('Err:: ', error)
                 }

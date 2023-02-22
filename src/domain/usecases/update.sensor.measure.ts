@@ -6,6 +6,7 @@ export interface UpdateSensorMeasure {
 
 export namespace UpdateSensorMeasure {
     export type Params = {
+        deviceIdentification: string
         sensorIdentification: string
         sensorMeasureType: string
         sensorValue: number
@@ -15,6 +16,7 @@ export namespace UpdateSensorMeasure {
     export type Result = {
         accountId: string
         sensorIdentification: string
+        deviceIdentification: string
         sensorTenantId: string
         sensorName: string
         sensorEquipment: string

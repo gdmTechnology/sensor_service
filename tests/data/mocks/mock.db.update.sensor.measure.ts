@@ -15,7 +15,7 @@ export class UpdateSensorMeasureRepositorySpy implements UpdateSensorMeasureRepo
         updateddAt: 'updateddAt'
     }
 
-    async update(params: UpdateSensorMeasureRepository.Params): Promise<UpdateSensorMeasureRepository.Result> {
+    async updateMeasure(params: UpdateSensorMeasureRepository.Params): Promise<UpdateSensorMeasureRepository.Result> {
         this.params = params
         return this.result
     }
