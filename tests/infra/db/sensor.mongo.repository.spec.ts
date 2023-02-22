@@ -108,4 +108,36 @@ describe('SensorMongoRepository', () => {
             await expect(promise).rejects.toThrow()
         })
     })
+
+    describe('updateMeasure()', () => {
+        test('Should return a sensor updated on success', async () => {
+            const sut = makeSut()
+            const params = createSensorParams()
+            const sensor = await sut.save(params)
+            const { sensorIdentification, deviceIdentification, sensorMeasureType } = sensor
+            const sensorUpdated = await sut.updateMeasure({
+                sensorIdentification,
+                deviceIdentification,
+                sensorCurrentValue: 100,
+                sensorMeasureType,
+                sensorTimeStamp: '1677081791000'
+            })
+            expect(sensorUpdated.sensorCurrentValue).toBe(100)
+        })
+
+        test('Should return null if updateMeasure() fails', async () => {
+            const sut = makeSut()
+            const params = createSensorParams()
+            const result = await sut.updateMeasure({ ...params, sensorIdentification: '' })
+            expect(result).toBeNull()
+        })
+
+        test('Should throw if updateMeasure() throws', async () => {
+            const sut = makeSut()
+            jest.spyOn(sut, 'updateMeasure').mockReturnValueOnce(new Promise((resolve, reject) => reject(throwError)))
+            const params = createSensorParams()
+            const promise = sut.updateMeasure(params)
+            await expect(promise).rejects.toThrow()
+        })
+    })
 })
