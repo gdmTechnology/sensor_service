@@ -1,7 +1,7 @@
-import { SaveSensorRepository, UpdateSensorRepository, GetSensorsListRepository, GetSensorRepository } from '@/data/protocols'
+import { SaveSensorRepository, UpdateSensorRepository, GetSensorsListRepository, GetSensorRepository, UpdateSensorMeasureRepository } from '@/data/protocols'
 import { SensorModel } from './models'
 
-export class SensorMongoRepository implements SaveSensorRepository, UpdateSensorRepository, GetSensorsListRepository, GetSensorRepository {
+export class SensorMongoRepository implements SaveSensorRepository, UpdateSensorRepository, GetSensorsListRepository, GetSensorRepository, UpdateSensorMeasureRepository {
     async save(data: SaveSensorRepository.Params): Promise<SaveSensorRepository.Result> {
         try {
             const result = await SensorModel.create(data)
@@ -22,6 +22,15 @@ export class SensorMongoRepository implements SaveSensorRepository, UpdateSensor
         sensorValue === undefined && delete update.sensorValue
         sensorTimeStamp === undefined && delete update.sensorTimeStamp
         if (sensorValue) update.sensorCurrentValue = sensorValue
+        const option = { new: true }
+        const result = SensorModel.findOneAndUpdate(filter, update, option).lean()
+        return result
+    }
+
+    async updateMeasure(data: UpdateSensorMeasureRepository.Params): Promise<UpdateSensorMeasureRepository.Result> {
+        const { deviceIdentification, sensorIdentification, sensorMeasureType, ...rest } = data
+        const filter = { deviceIdentification, sensorIdentification }
+        const update: any = rest
         const option = { new: true }
         const result = SensorModel.findOneAndUpdate(filter, update, option).lean()
         return result
