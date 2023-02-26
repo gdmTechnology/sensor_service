@@ -36,8 +36,8 @@ export class SensorMongoRepository implements SaveSensorRepository, UpdateSensor
         return result
     }
 
-    async list(tenantId: string): Promise<GetSensorsListRepository.Result[]> {
-        return await SensorModel.find({ tenantId })
+    async list(sensorTenantId: string): Promise<GetSensorsListRepository.Result[]> {
+        return await SensorModel.find({ sensorTenantId })
     }
 
     async get(sensorIdentification: string): Promise<GetSensorRepository.Result> {
