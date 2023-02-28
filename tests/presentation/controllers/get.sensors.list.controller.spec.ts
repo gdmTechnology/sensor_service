@@ -22,14 +22,14 @@ const mockSut = (): SutTypes => {
     }
 }
 
-const mockRequest = (): any => 'tenantId'
+const mockRequest = (): any => ({ sensorTenantId: 'sensorTenantId' })
 
 describe('GetSensorsListController', () => {
     test('Should call Validation with correct values', async () => {
         const { sut, validationSpy } = mockSut()
         const request = mockRequest()
         await sut.handle(request)
-        expect(validationSpy.input).toEqual({ tenantId: 'tenantId' })
+        expect(validationSpy.input).toEqual({ sensorTenantId: 'sensorTenantId' })
     })
 
     test('Should return 400 if validation fails', async () => {
@@ -52,7 +52,7 @@ describe('GetSensorsListController', () => {
         const { sut, getSensorsListSpy } = mockSut()
         const request = mockRequest()
         await sut.handle(request)
-        expect(getSensorsListSpy.params).toEqual(request)
+        expect(getSensorsListSpy.params).toEqual('sensorTenantId')
     })
 
     test('Should return 400 if GetSensorsList fails', async () => {

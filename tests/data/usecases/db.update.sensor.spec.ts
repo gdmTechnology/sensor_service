@@ -50,9 +50,17 @@ describe('DbUpdateSensor', () => {
         await expect(promise).rejects.toThrow()
     })
 
-    test('Should return null if UpdateSensorRepository fails', async () => {
+    test('Should return applicationError if UpdateSensorRepository fails', async () => {
         const { sut, updateSensorRepositorySpy } = makeSut()
         updateSensorRepositorySpy.result = null
+        const request = mockRequest()
+        const result = await sut.handle(request)
+        expect(result.isError()).toBeTruthy()
+    })
+
+    test('Should return applicationError if UpdateSensorRepository returns code 11000', async () => {
+        const { sut, updateSensorRepositorySpy } = makeSut()
+        updateSensorRepositorySpy.result.code = 11000
         const request = mockRequest()
         const result = await sut.handle(request)
         expect(result.isError()).toBeTruthy()
