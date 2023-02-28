@@ -20,7 +20,7 @@ export class DbUpdateSensorMeasure implements UpdateSensorMeasure {
         if (!sensor) {
             const appError = new ApplicationError(
                 Constants.NotFoundSensor.error,
-                Constants.NotFoundSensor.message
+                Constants.NotFoundSensor
             )
             return error(appError)
         }

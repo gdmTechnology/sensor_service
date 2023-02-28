@@ -22,5 +22,6 @@ export namespace LoadAccountByToken {
         stateAddress?: string
         accessToken?: string
         role?: string
+        tenant?: string
     }
 }

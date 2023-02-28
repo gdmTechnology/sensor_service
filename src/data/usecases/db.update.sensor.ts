@@ -13,7 +13,13 @@ export class DbUpdateSensor implements UpdateSensor {
         if (!sensor) {
             const appError = new ApplicationError(
                 Constants.NotFoundSensor.error,
-                Constants.NotFoundSensor.message
+                Constants.NotFoundSensor
+            )
+            return error(appError)
+        } else if (sensor.code === 11000) {
+            const appError = new ApplicationError(
+                Constants.DuplicateError.error,
+                Constants.DuplicateError
             )
             return error(appError)
         }

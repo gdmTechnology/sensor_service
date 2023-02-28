@@ -27,5 +27,6 @@ export namespace UpdateSensor {
         sensorTimeStamp: string
         createdAt: Date
         updatedAt: Date
+        code?: number
     }
 }

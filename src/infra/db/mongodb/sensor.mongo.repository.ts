@@ -13,18 +13,22 @@ export class SensorMongoRepository implements SaveSensorRepository, UpdateSensor
     }
 
     async update(data: UpdateSensorRepository.Params): Promise<UpdateSensorRepository.Result> {
-        const { sensorIdentification, sensorName, sensorEquipment, sensorMeasureType, sensorTimeStamp, sensorValue } = data
-        const filter = { sensorIdentification }
-        const update: any = { sensorName, sensorEquipment, sensorMeasureType, sensorTimeStamp }
-        sensorName === undefined && delete update.sensorName
-        sensorEquipment === undefined && delete update.sensorEquipment
-        sensorMeasureType === undefined && delete update.sensorMeasureType
-        sensorValue === undefined && delete update.sensorValue
-        sensorTimeStamp === undefined && delete update.sensorTimeStamp
-        if (sensorValue) update.sensorCurrentValue = sensorValue
-        const option = { new: true }
-        const result = SensorModel.findOneAndUpdate(filter, update, option).lean()
-        return result
+        try {
+            const { sensorIdentification, sensorName, sensorEquipment, sensorMeasureType, sensorTimeStamp, sensorValue } = data
+            const filter = { sensorIdentification }
+            const update: any = { sensorName, sensorEquipment, sensorMeasureType, sensorTimeStamp }
+            sensorName === undefined && delete update.sensorName
+            sensorEquipment === undefined && delete update.sensorEquipment
+            sensorMeasureType === undefined && delete update.sensorMeasureType
+            sensorValue === undefined && delete update.sensorValue
+            sensorTimeStamp === undefined && delete update.sensorTimeStamp
+            if (sensorValue) update.sensorCurrentValue = sensorValue
+            const option = { new: true }
+            const result = await SensorModel.findOneAndUpdate(filter, update, option).lean()
+            return result
+        } catch (error) {
+            return error
+        }
     }
 
     async updateMeasure(data: UpdateSensorMeasureRepository.Params): Promise<UpdateSensorMeasureRepository.Result> {
@@ -32,7 +36,7 @@ export class SensorMongoRepository implements SaveSensorRepository, UpdateSensor
         const filter = { deviceIdentification, sensorIdentification }
         const update: any = rest
         const option = { new: true }
-        const result = SensorModel.findOneAndUpdate(filter, update, option).lean()
+        const result = await SensorModel.findOneAndUpdate(filter, update, option).lean()
         return result
     }
 

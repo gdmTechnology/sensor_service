@@ -3,7 +3,7 @@ import { Validation } from '@/presentation/protocols'
 
 export const makeGetSensorsListValidation = (): ValidationComposite => {
     const validations: Validation[] = []
-    for (const field of ['tenantId']) {
+    for (const field of ['sensorTenantId']) {
         validations.push(new RequiredFieldValidation(field))
     }
     return new ValidationComposite(validations)
