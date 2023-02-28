@@ -10,5 +10,9 @@ export const Constants = {
     NotFoundSensor: {
         error: 'NotFoundSensorError',
         message: 'Not found sensor identification.'
+    },
+    NotFoundDevice: {
+        error: 'NotFoundDevice',
+        message: 'Invalid device identification.'
     }
 }
