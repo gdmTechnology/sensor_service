@@ -11,8 +11,7 @@
     "test:unit": "npm test -- --watch -c jest-unit-config.js",
     "test:integration": "npm test -- --watch -c jest-integration-config.js",
     "test:ci": "npm test -- --forceExit --coverage --coverageDirectory=output/coverage/jest",
-    "test:staged": "npm test -- --forceExit",
-    "prepare": "husky install"
+    "test:staged": "npm test -- --forceExit"
   },
   "keywords": [],
   "author": "",
