@@ -9,25 +9,46 @@ pipeline {
 				'''
 			}
 		}
-		stage('Tests') {
+		stage("install node_modules") {
 			steps {
 				script {
 				sh 'npm i'
-				sh 'npm run test'
+				}
+			}
+		}
+		stage('tests') {
+			steps {
+				script {
+					sh 'npm run test:ci'
 				}
 			}
 			post {
 				always {
-				step([$class: 'CoberturaPublisher', coberturaReportFile: 'output/coverage/jest/clover.xml', lineCoverageTargets: '100, 95, 50'])
+				step([$class: 'CoberturaPublisher', coberturaReportFile: 'output/coverage/jest/cobertura-coverage.xml', lineCoverageTargets: '100, 95, 50'])
 				}
 			}
 		}
-		stage("killing old container") {
+		stage("stop container") {
 			steps {
-				sh 'sudo docker system prune --all'
+				sh 'docker stop sensor_service || true'
 			}
 		}
-		stage("build") {
+		stage("remove old image") {
+			steps {
+				sh 'docker rmi sensor-service || true'
+			}
+		}
+		stage("remove unused containers and images") {
+			steps {
+				sh 'docker system prune -af'
+			}
+		}
+		stage("build typescript") {
+			steps {
+				sh 'npm run build'
+			}
+		}
+		stage("build docker image") {
 			steps {
 				sh 'docker build -t sensor-service .'
 			}
@@ -50,9 +71,9 @@ pipeline {
 					-e MONGO_USER=rem \
 					-p 3003:3003 \
 					--hostname sensor_service \
-                    --network middleware-network \
+                    --network rem_network \
 					--restart always \
-					--name sensor_service sensor_service
+					--name sensor_service sensor-service
 				'''
 			}
 		}
