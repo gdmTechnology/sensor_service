@@ -8,8 +8,7 @@ export class DeviceMongoRepository implements
     GetDeviceRepository {
     async save(data: CreateDeviceRepository.Params): Promise<CreateDeviceRepository.Result | null> {
         const result = await DeviceModel.create(data)
-        if (result.accountId) return result
-        return null
+        return result
     }
 
     async get(deviceIdentification: string): Promise<GetDeviceRepository.Result> {

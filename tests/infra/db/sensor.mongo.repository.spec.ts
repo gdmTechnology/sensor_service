@@ -33,6 +33,14 @@ describe('SensorMongoRepository', () => {
             const sensor = await sut.save(params)
             expect(sensor).toBeDefined()
         })
+
+        test('Should return null if save() fails', async () => {
+            const sut = makeSut()
+            const params = createSensorParams()
+            delete params.deviceIdentification
+            const sensor = await sut.save(params)
+            expect(sensor).toBeNull()
+        })
     })
 
     describe('update()', () => {
@@ -41,13 +49,14 @@ describe('SensorMongoRepository', () => {
             const params = createSensorParams()
             const sensor = await sut.save(params)
             const { sensorIdentification } = sensor
-            const sensorUpdated = await sut.update({ sensorIdentification, sensorName: 'sensorNameUpdated' })
+            const sensorUpdated = await sut.update({ sensorIdentification, sensorName: 'sensorNameUpdated', sensorValue: 1 })
             expect(sensorUpdated.sensorName).toBe('sensorNameUpdated')
         })
 
         test('Should return null if update() fails', async () => {
             const sut = makeSut()
             const params = createSensorParams()
+            delete params.sensorName
             const result = await sut.update({ ...params, sensorIdentification: '' })
             expect(result).toBeNull()
         })
