@@ -5,8 +5,7 @@ export class SensorMongoRepository implements SaveSensorRepository, UpdateSensor
     async save(data: SaveSensorRepository.Params): Promise<SaveSensorRepository.Result> {
         try {
             const result = await SensorModel.create(data)
-            if (result.accountId) return result
-            return null
+            return result
         } catch (error) {
             return null
         }
